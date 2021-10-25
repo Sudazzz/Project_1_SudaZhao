@@ -2,6 +2,7 @@ void setup() {
   size(800, 800);
   background(245, 220, 200);// the sky color
 }
+comment on this sketch.
 
 void draw() {
   fill(240, 121, 100);//sun color
