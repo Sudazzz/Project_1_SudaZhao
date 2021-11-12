@@ -1,69 +1,96 @@
-var option=1;
+vvar option=1;
 var a=400;
 var b=350;
 var c=15;
 var d=15;
+var opacity=0;
 var dropSpeed=3;
+var myPerson1;
+var peopleArray=[];
 
 function setup() {
-  createCanvas(800, 1000);
+  createCanvas(800, 1000,P2D);//use 2D engine to make things faster
   print("press any key to see what happened");
+  myPerson1 = new people (200, 600);
+  for (var i = 0; i < 4; i++) {
+  peopleArray.push(new (people));
+  }
 }
 
 function draw() {
+  currentSecond = second(); 
+  
   frameRate(10);//the rate of the moving of light beam and the spot changing rate of humans
   background(20, 20, 100);
+  for(o=0; o<100; o+=80){
+    opacity+=o;
+  }
 
-  if (option == 1) {//the original normal scene
+  if (currentSecond % 10 == 0) {//the original normal scene
     UFO();// call UFO
     moon();//three moons
     road();//highway
-    for (i=0; i<1000; i+=200) {
-      aliens(i, random(600, 900));//random spot beneath the higyway
+    for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
     }
+    myPerson1.display();
+    myPerson1.move();
     drop();//the light beam from UFO
   }
 
   //other abnormal scene
-  if (option == 2) {
+  if (currentSecond % 5 == 0) {
     balls1();
     moon();//three moons
     road();//highway
-    for (i=0; i<1000; i+=200) {
-      aliens(i, random(600, 900));//random spot beneath the higyway
+      for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
     }
+    myPerson1.display();
+    myPerson1.move();
+    drop();//the light beam from UFO
+  }
+
+  if (option == 1) {
+    UFO();// call UFO
+    balls2();
+    road();//highway
+     for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
+    }
+    myPerson1.display();
+    myPerson1.move();
+    drop();//the light beam from UFO
+  }
+
+  if (option == 2) {
+    UFO();// call UFO
+    moon();//three moons
+    balls3();
+    road();//highway
+     for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
+    }
+    myPerson1.display();
+    myPerson1.move();
     drop();//the light beam from UFO
   }
 
   if (option == 3) {
     UFO();// call UFO
-    balls2();
-    road();//highway
-    for (i=0; i<1000; i+=200) {
-      aliens(i, random(600, 900));//random spot beneath the higyway
-    }
-    drop();//the light beam from UFO
-  }
-
-  if (option == 4 ) {
-    UFO();// call UFO
-    moon();//three moons
-    balls3();
-    road();//highway
-    for (i=0; i<1000; i+=400) {
-      aliens(i, random(600, 900));//random spot beneath the higyway
-    }
-    drop();//the light beam from UFO
-  }
-
-  if (option == 5 ) {
-    UFO();// call UFO
     moon();//three moons
     road();//highway
     balls4();
-    for (i=0; i<1000; i+=200) {
-      aliens(i, random(600, 900));//random spot beneath the higyway
+      for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
     }
+    myPerson1.display();
+    myPerson1.move();
   }
 }
 
@@ -112,18 +139,6 @@ function road() {
     fill(70);
     rect(x, 590, 100, 20);//the road stripes
   }
-}
-
-function aliens(e, f) {
-  stroke(0);
-  strokeWeight(3);
-  fill(random(0, 255), random(0, 255), random(0, 255));//changable color
-
-  quad(e-10, f+40, e-30, f+100, e+30, f+100, e+10, f+40);//body 1
-  ellipse(e, f, 10, 13);
-  ellipse(e, f, 40, 40);//head 1
-  fill(0);
-  ellipse(e, f, 15, 15);//eye 1
 }
 
 function moon() {
@@ -225,8 +240,32 @@ function balls4() {//the fifth scene movement,bubbles
 
 function keyPressed() {
   option++;
-  if (option > 5) {
+  if (option > 3) {
     option = 1;
     //always change to other pattern by pressing key
+  }
+}
+
+class people {
+  constructor (x, y) {
+    this.x = random(100,600);
+    this.y = random(600,1000);    
+  }
+  
+  display () {
+    stroke(0);
+    strokeWeight(3);
+    fill(random(0, 255), random(0, 255), random(0, 255), d);//changable color
+    quad(this.x-10, this.y+40, this.x-30, this.y+100, this.x+30, this.y+100, this.x+10, this.y+40);//body 1
+    ellipse(this.x, this.y, 10, 13);
+    ellipse(this.x, this.y, 40, 40);//head 1
+    fill(0);
+    ellipse(this.x, this.y, 15, 15);//eye 1
+  }
+  
+  move () {
+    this.x += random (-5, 5);
+    this.y += random (-5, 5);
+    
   }
 }
