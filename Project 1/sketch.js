@@ -1,8 +1,9 @@
-var option=1;
+var option=1;//begin scene
 var a=400;
 var b=350;
 var c=15;
 var d=15;
+var e=300;
 var opacity=0;
 var dropSpeed=3;
 var myPerson1;
@@ -40,7 +41,8 @@ function draw() {
   }
 
   //other abnormal scene
-  if (currentSecond % 5 == 0) {
+  if (option == 1) {
+		UFO();
     balls1();
     moon();//three moons
     road();//highway
@@ -53,23 +55,9 @@ function draw() {
     drop();//the light beam from UFO
   }
 
-  if (option == 1) {
-    UFO();// call UFO
-    balls2();
-    road();//highway
-     for (var i = 0; i < peopleArray.length; i++) {
-      peopleArray [i]. display ();
-      peopleArray [i]. move ();
-    }
-    myPerson1.display();
-    myPerson1.move();
-    drop();//the light beam from UFO
-  }
-
   if (option == 2) {
     UFO();// call UFO
-    moon();//three moons
-    balls3();
+    balls1();
     road();//highway
      for (var i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
@@ -84,13 +72,59 @@ function draw() {
     UFO();// call UFO
     moon();//three moons
     road();//highway
-    balls4();
+     for (var i = 0; i < peopleArray.length; i++) {
+      peopleArray [i]. display ();
+      peopleArray [i]. move ();
+    }
+    myPerson1.display();
+    myPerson1.move();
+    drop();//the light beam from UFO
+  }
+
+  if (option == 4) {
+    UFO();// call UFO
+    moon();//three moons
+    road();//highway
+    balls2();
       for (var i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
       peopleArray [i]. move ();
     }
     myPerson1.display();
     myPerson1.move();
+  }
+}
+
+
+function keyPressed() {
+  option++;
+  if (option > 4) {
+    option = 1;
+    //always change to other pattern by pressing key
+  }
+}
+
+class people {
+  constructor (x, y) {
+    this.x = random(100,600);
+    this.y = random(600,800);    
+  }
+  
+  display () {
+    stroke(0);
+    strokeWeight(3);
+    fill(random(0, 255), random(0, 255), random(0, 255), d);//changable color
+    quad(this.x-10, this.y+40, this.x-30, this.y+100, this.x+30, this.y+100, this.x+10, this.y+40);//body 1
+    ellipse(this.x, this.y, 10, 13);
+    ellipse(this.x, this.y, 40, 40);//head 1
+    fill(0);
+    ellipse(this.x, this.y, 15, 15);//eye 1
+  }
+  
+  move () {
+    this.x += random (-5, 5);
+    this.y += random (-5, 5);
+    
   }
 }
 
@@ -184,88 +218,29 @@ function balls1() {//the second scene movement, 5 red bolloons
   ellipse(530, 240, 50, 60);
 }
 
-function balls2() {// the third scene movement, move with the beam light
-  fill(180, 20, 30);
-  ellipse(a-100, 100, 50, 60);
-  ellipse(a-50, 150, 50, 60);
-  ellipse(a, 200, 50, 60);
-  ellipse(a-50, 250, 50, 60);
-  ellipse(a-100, 300, 50, 60);//the right >
-
-  ellipse(a-300, 100, 50, 60);
-  ellipse(a-250, 150, 50, 60);
-  ellipse(a-200, 200, 50, 60);
-  ellipse(a-250, 250, 50, 60);
-  ellipse(a-300, 300, 50, 60);//the left >
-  a=a+20;
-  if (a>750) {//repetitive
-    a=0;
-  }
-}
-
-function balls3() {//the fourth scene movement, two line for two bubbles
-  fill(180, 20, 30);
-  ellipse(200, 900, 50, 60);
-  ellipse(200, 800, 50, 60);
-  ellipse(600, 900, 50, 60);
-  ellipse(600, 800, 50, 60);
-}
-
-function balls4() {//the fifth scene movement,bubbles
+function balls2() {//the fifth scene movement,bubbles
   noStroke();
   fill(180, 20, 30, 40);
-  ellipse(400+random(-30, 30), b+200, b-50, b-50);
-  ellipse(400+random(-30, 30), b+250, b-100, b-100);
-  ellipse(400+random(-30, 30), b+300, b-150, b-150);
-  ellipse(400+random(-30, 30), b+100, b-200, b-200);
-  ellipse(400+random(-30, 30), b+150, b-250, b-250);//the middle line
+  ellipse(400+random(-30, 30), e+200, e-50, e-50);
+  ellipse(400+random(-30, 30), e+250, e-100, e-100);
+  ellipse(400+random(-30, 30), e+300, e-150, e-150);
+  ellipse(400+random(-30, 30), e+100, e-200, e-200);
+  ellipse(400+random(-30, 30), e+150, e-250, e-250);//the middle line
 
-  ellipse(350+random(-30, 30), b+200, b-50, b-50);
-  ellipse(300+random(-30, 30), b+250, b-100, b-100);
-  ellipse(250+random(-30, 30), b+300, b-150, b-150);
-  ellipse(200+random(-30, 30), b+100, b-200, b-200);
-  ellipse(150+random(-30, 30), b+150, b-250, b-250);//the left oblique line
+  ellipse(350+random(-30, 30), e+200, e-50, e-50);
+  ellipse(300+random(-30, 30), e+250, e-100, e-100);
+  ellipse(250+random(-30, 30), e+300, e-150, e-150);
+  ellipse(200+random(-30, 30), e+100, e-200, e-200);
+  ellipse(150+random(-30, 30), e+150, e-250, e-250);//the left oblique line
 
-  ellipse(450+random(-30, 30), b+200, b-50, b-50);
-  ellipse(500+random(-30, 30), b+250, b-100, b-100);
-  ellipse(550+random(-30, 30), b+300, b-150, b-150);
-  ellipse(600+random(-30, 30), b+100, b-200, b-200);
-  ellipse(650+random(-30, 30), b+150, b-250, b-250);//the right oblique line
+  ellipse(450+random(-30, 30), e+200, e-50, e-50);
+  ellipse(500+random(-30, 30), e+250, e-100, e-100);
+  ellipse(550+random(-30, 30), e+300, e-150, e-150);
+  ellipse(600+random(-30, 30), e+100, e-200, e-200);
+  ellipse(650+random(-30, 30), e+150, e-250, e-250);//the right oblique line
 
-  b=b+10;
-  if (b>300) {
-    b=100;//repetitive
-  }
-}
-
-function keyPressed() {
-  option++;
-  if (option > 3) {
-    option = 1;
-    //always change to other pattern by pressing key
-  }
-}
-
-class people {
-  constructor (x, y) {
-    this.x = random(100,600);
-    this.y = random(600,1000);    
-  }
-  
-  display () {
-    stroke(0);
-    strokeWeight(3);
-    fill(random(0, 255), random(0, 255), random(0, 255), d);//changable color
-    quad(this.x-10, this.y+40, this.x-30, this.y+100, this.x+30, this.y+100, this.x+10, this.y+40);//body 1
-    ellipse(this.x, this.y, 10, 13);
-    ellipse(this.x, this.y, 40, 40);//head 1
-    fill(0);
-    ellipse(this.x, this.y, 15, 15);//eye 1
-  }
-  
-  move () {
-    this.x += random (-5, 5);
-    this.y += random (-5, 5);
-    
+  e=e+10;
+  if (e>300) {
+  e=100;//repetitive
   }
 }
