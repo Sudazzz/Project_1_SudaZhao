@@ -1,4 +1,4 @@
-vvar option=1;
+var option=1;
 var a=400;
 var b=350;
 var c=15;
