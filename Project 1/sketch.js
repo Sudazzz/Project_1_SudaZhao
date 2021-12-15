@@ -1,42 +1,46 @@
-var option=1;//begin scene
-var a=400;
-var b=350;
-var c=15;
-var d=15;
-var e=300;
-var opacity=0;
-var dropSpeed=3;
-var myPerson1;
-var peopleArray=[];
+let option=1;//begin scene
+let a=400;//used as a variable in the drop function 
+let b=350;//the initial speed of the lightbeam
+let c=15;//used as a variable in the drop function 
+let d=15;//used as a variable to create light shadow in the drop function
+let e=300;//used in ball2 function to varify the size of fog
+let opacity=0;//used as opacity which will change with the flow of time
+let dropSpeed=3;//the rate to speed up
+let myPerson1;//the class I made
+let peopleArray=[];//the array I made for my class
+let o=0;
 
 function setup() {
   createCanvas(800, 1000,P2D);//use 2D engine to make things faster
-  print("press any key to see what happened");
-  myPerson1 = new people (200, 600);
-  for (var i = 0; i < 4; i++) {
+  print("press any key or hold for a second to see what happened");//explain what I want to show to others
+  myPerson1 = new people (200, 600);//create class
+	
+  for (let i = 0; i < 4; i++) {
   peopleArray.push(new (people));
-  }
+  }//put 5 people in peopleArray
 }
 
 function draw() {
-  currentSecond = second(); 
+  currentSecond = second(); //use time to change something on the screen
   
   frameRate(10);//the rate of the moving of light beam and the spot changing rate of humans
-  background(20, 20, 100);
+  background(20, 20, 100);//dark blue background invode people feelings
   for(o=0; o<100; o+=80){
-    opacity+=o;
+    opacity+=o;//change the opacity with time
   }
 
-  if (currentSecond % 10 == 0) {//the original normal scene
+  if (currentSecond % 10 == 0) {//change with the flow with time, unexpected things will happen
+		if (option != 5){
+			option = 5;
+		}
+	}
+			
+			 if (option == 5) {//people will dispear
     UFO();// call UFO
     moon();//three moons
     road();//highway
-    for (var i = 0; i < peopleArray.length; i++) {
-      peopleArray [i]. display ();
-      peopleArray [i]. move ();
-    }
-    myPerson1.display();
-    myPerson1.move();
+		//I do not want any car appear on the highway though I consider this option for a while, because I think it will make this scene too complicated and
+		//it does not match what I want to convey
     drop();//the light beam from UFO
   }
 
@@ -44,9 +48,9 @@ function draw() {
   if (option == 1) {
 		UFO();
     balls1();
-    moon();//three moons
-    road();//highway
-      for (var i = 0; i < peopleArray.length; i++) {
+    moon();
+    road();
+      for (let i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
       peopleArray [i]. move ();
     }
@@ -59,7 +63,7 @@ function draw() {
     UFO();// call UFO
     balls1();
     road();//highway
-     for (var i = 0; i < peopleArray.length; i++) {
+     for (let i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
       peopleArray [i]. move ();
     }
@@ -72,7 +76,7 @@ function draw() {
     UFO();// call UFO
     moon();//three moons
     road();//highway
-     for (var i = 0; i < peopleArray.length; i++) {
+     for (let i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
       peopleArray [i]. move ();
     }
@@ -86,7 +90,7 @@ function draw() {
     moon();//three moons
     road();//highway
     balls2();
-      for (var i = 0; i < peopleArray.length; i++) {
+      for (let i = 0; i < peopleArray.length; i++) {
       peopleArray [i]. display ();
       peopleArray [i]. move ();
     }
@@ -94,153 +98,19 @@ function draw() {
     myPerson1.move();
   }
 }
+//every option have something slightly different to invode audience thinking;
+//what I want to do is using some changes to show something audience do not expected 
+//so that this feelings audience feel when they this unexpected changes will make them think this project is misterious
+//I do not know whether this idea is good or not, but I have asked my classmates about this idea I have, some of them agree with me,
+//some of them not, but I still think this is what I want to do.
+//I did not know how to use the array in the class, but I asked my classmate later and they helped me and taught my a lot;
+//I still think I can maybe combine some of my code since I have call same functions a lot of time, but I am not sure how to do that.
 
 
 function keyPressed() {
   option++;
   if (option > 4) {
     option = 1;
-    //always change to other pattern by pressing key
-  }
-}
-
-class people {
-  constructor (x, y) {
-    this.x = random(100,600);
-    this.y = random(600,800);    
-  }
-  
-  display () {
-    stroke(0);
-    strokeWeight(3);
-    fill(random(0, 255), random(0, 255), random(0, 255), d);//changable color
-    quad(this.x-10, this.y+40, this.x-30, this.y+100, this.x+30, this.y+100, this.x+10, this.y+40);//body 1
-    ellipse(this.x, this.y, 10, 13);
-    ellipse(this.x, this.y, 40, 40);//head 1
-    fill(0);
-    ellipse(this.x, this.y, 15, 15);//eye 1
-  }
-  
-  move () {
-    this.x += random (-5, 5);
-    this.y += random (-5, 5);
-    
-  }
-}
-
-function UFO() {
-  fill(0);
-  noStroke();
-  ellipse(400, 300, 250, 300);
-  //the UFO outline
-  fill(20, 20, 100);
-  rect(150, 350, 650, 250);//cover unnecessary part of UFO
-  fill(0);
-  ellipse(400, 350, 500, 150);//the disk of UFO
-  fill(255);
-  fill(map(mouseX, 0, width, 0, 255), map(mouseY, 0, 900, 0, 255), map(mouseX, 0, 200, 0, 255));//Change inside light in the UFO
-  rect(380, 200, 50, 70);//the window of UFO
-}
-
-function drop() {
-  fill(255);
-  ellipse(400, 350, 120, 40);
-  noStroke();
-  fill(255, 190);//make opcity of light beam
-  beginShape();
-  vertex(400, 350);
-  vertex(a-c/2, b);
-  vertex(a+c/2, b);
-  endShape();//bright light beam
-  fill(255);
-  ellipse(a, b, c, d);//light reflection circle
-  c+=3;
-  d+=1;
-  b=b+dropSpeed;//changable spot of light beam
-  if (b>=600) {
-    b=350;
-    c=10;
-    d=15;
-  }
-}//make light beam move forward and backforard
-
-function road() {
-  fill(0);
-  stroke(100, 100);
-  strokeWeight(5);
-  rect(0, 500, 1000, 200);//the road outline
-  for (x=0; x<1000; x+=150) {
-    fill(70);
-    rect(x, 590, 100, 20);//the road stripes
-  }
-}
-
-function moon() {
-  fill(255, 255, 224);//moon color
-  noStroke();
-  ellipse(400, 70, 100, 100);
-  ellipse(120, 180, 120, 120);
-  ellipse(680, 180, 120, 120);//three moons' outline
-
-  fill(255, 228, 181);
-  stroke(255, 218, 185);
-  strokeWeight(1);//Lunar crater color
-
-  ellipse(370, 65, 20, 20);
-  ellipse(360, 80, 10, 10);
-  ellipse(390, 90, 30, 30);
-  ellipse(400, 50, 4, 4);
-  ellipse(430, 40, 10, 10);
-  ellipse(420, 70, 20, 20);
-  // first moom's lunar craters
-  ellipse(130, 165, 20, 20);
-  ellipse(160, 180, 10, 10);
-  ellipse(90, 190, 40, 40);
-  ellipse(140, 150, 4, 4);
-  ellipse(100, 140, 20, 20);
-  ellipse(150, 200, 20, 20);
-  // second moom's lunar craters
-  ellipse(670, 165, 20, 20);
-  ellipse(640, 180, 10, 10);
-  ellipse(710, 190, 40, 40);
-  ellipse(660, 150, 4, 4);
-  ellipse(700, 140, 20, 20);
-  ellipse(650, 200, 20, 20);
-  // third moom's lunar craters
-}
-
-function balls1() {//the second scene movement, 5 red bolloons
-  fill(180, 20, 30);
-  ellipse(150, 350, 50, 60);
-  ellipse(270, 240, 50, 60);
-  ellipse(400, 170, 50, 60);
-  ellipse(650, 350, 50, 60);
-  ellipse(530, 240, 50, 60);
-}
-
-function balls2() {//the fifth scene movement,bubbles
-  noStroke();
-  fill(180, 20, 30, 40);
-  ellipse(400+random(-30, 30), e+200, e-50, e-50);
-  ellipse(400+random(-30, 30), e+250, e-100, e-100);
-  ellipse(400+random(-30, 30), e+300, e-150, e-150);
-  ellipse(400+random(-30, 30), e+100, e-200, e-200);
-  ellipse(400+random(-30, 30), e+150, e-250, e-250);//the middle line
-
-  ellipse(350+random(-30, 30), e+200, e-50, e-50);
-  ellipse(300+random(-30, 30), e+250, e-100, e-100);
-  ellipse(250+random(-30, 30), e+300, e-150, e-150);
-  ellipse(200+random(-30, 30), e+100, e-200, e-200);
-  ellipse(150+random(-30, 30), e+150, e-250, e-250);//the left oblique line
-
-  ellipse(450+random(-30, 30), e+200, e-50, e-50);
-  ellipse(500+random(-30, 30), e+250, e-100, e-100);
-  ellipse(550+random(-30, 30), e+300, e-150, e-150);
-  ellipse(600+random(-30, 30), e+100, e-200, e-200);
-  ellipse(650+random(-30, 30), e+150, e-250, e-250);//the right oblique line
-
-  e=e+10;
-  if (e>300) {
-  e=100;//repetitive
+    //change to other pattern by pressing key
   }
 }
